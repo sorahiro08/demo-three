@@ -8,14 +8,17 @@
 <body>
   <div id="stage"></div>
   <script src="./js/three.min.js"></script>
+  <!-- <script src="./js/OrbitControls.js"></script> -->
   <script>
     (function () {
       'use strict';
 
       var scene;
-      var person;
-      var head; // mesh
-      var body; // mesh
+      var box; // mesh
+      var sphere1;
+      var sphere2;
+      var sphere3;
+      var plane;
       var light;
       var ambient;
       var camera;
@@ -26,6 +29,7 @@
       var width = 500;
       var height = 250;
       var theta = 0;
+      var controls;
 
       // scene ステージ
       scene = new THREE.Scene();
@@ -37,28 +41,58 @@
       // - position
       // - scale
       // - rotation
-      head = new THREE.Mesh(
-        new THREE.BoxGeometry(20, 20, 20),
+      box = new THREE.Mesh(
+        new THREE.BoxGeometry(50, 50, 50),
         new THREE.MeshLambertMaterial({ 
           color: 0x0000ff
         }),
       );
-      head.position.set(0, 40, 0);
+      box.position.set(0, 0, 0);
       // box.rotation.set(70 * Math.PI / 180, 0, 0);
-      // scene.add(head);
+      scene.add(box);
 
-      body = new THREE.Mesh(
-        new THREE.BoxGeometry(40, 60, 40),
-        new THREE.MeshLambertMaterial({ 
-          color: 0x0000ff
+      // sphere
+      sphere1 = new THREE.Mesh(
+        new THREE.SphereGeometry(50, 20, 20),
+        new THREE.MeshBasicMaterial({ 
+          color: 0x4caf50
         }),
       );
-      body.position.set(0, 0, 0);
-      // scene.add(body);
-      person = new THREE.Group();
-      person.add(head);
-      person.add(body);
-      scene.add(person);
+      sphere1.position.set(100, 0, -150);
+      scene.add(sphere1);
+
+      // sphere
+      sphere2 = new THREE.Mesh(
+        new THREE.SphereGeometry(50, 20, 20),
+        new THREE.MeshLambertMaterial({ 
+          color: 0x4caf50
+        }),
+      );
+      sphere2.position.set(100, 0, 0);
+      scene.add(sphere2);
+
+      // sphere
+      sphere3 = new THREE.Mesh(
+        new THREE.SphereGeometry(50, 20, 20),
+        new THREE.MeshPhongMaterial({ 
+          color: 0x4caf50,
+          wireframe: true,
+        }),
+      );
+      sphere3.position.set(100, 0, 150);
+      scene.add(sphere3);
+
+      // plane
+      plane = new THREE.Mesh(
+        new THREE.PlaneGeometry(200, 200),
+        new THREE.MeshLambertMaterial({ 
+          color: 0x0096d6,
+          side: THREE.DoubleSide,
+        }),
+      );
+      plane.position.set(0, -50, 0);
+      plane.rotation.x = 90 * Math.PI / 180;
+      scene.add(plane);
 
       // light
       light = new THREE.DirectionalLight(0xffffff, 1);
@@ -81,6 +115,10 @@
       lightHelper = new THREE.DirectionalLightHelper(light, 20);
       scene.add(lightHelper);
 
+      // controls
+      // controls = new THREE.OrbitControls(camera);
+      // controls.autoRotate = true;
+      
       // renderer
       renderer = new THREE.WebGLRenderer({ antialias : true });
       renderer.setSize(width, height);
@@ -97,7 +135,7 @@
         // camera.lookAt(scene.position);
         // box.rotation.y += 0.01;
 
-        person.rotation.y += 0.01;
+        // controls.update();
         renderer.render(scene, camera);        
       }
       render();
