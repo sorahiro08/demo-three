@@ -31,11 +31,28 @@
       // mesh 物体
       // - geometry 形状
       // - meterial 材質
+      // 操作
+      // - position
+      // - scale
+      // - rotation
       box = new THREE.Mesh(
         new THREE.BoxGeometry(50, 50, 50),
-        new THREE.MeshLambertMaterial({ color: 0x0000ff }),
+        new THREE.MeshLambertMaterial({ 
+          // color: 0x0000ff 
+          // color: '#0000ff'
+          // color: 'rgb(122, 100, 48)'
+          // color: 'hsl(100, 30%, 20%)'
+          color: new THREE.Color(0x0000ff)
+        }),
       );
-      box.position.set(0, 0, 0);
+      // box.position.set(0, 0, 0);
+      box.position.x = 50;
+      box.position.y = 0;
+      box.position.z = 0;
+      // box.scale.set(2, 1, 0.5);
+      box.scale.x = 2;
+      // box.rotation.x = 45 * Math.PI / 180;
+      box.rotation.set(70 * Math.PI / 180, 0, 0);
       scene.add(box);
 
       // light
