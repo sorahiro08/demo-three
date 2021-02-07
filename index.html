@@ -13,7 +13,9 @@
       'use strict';
 
       var scene;
-      var box; // mesh
+      var person;
+      var head; // mesh
+      var body; // mesh
       var light;
       var ambient;
       var camera;
@@ -35,25 +37,28 @@
       // - position
       // - scale
       // - rotation
-      box = new THREE.Mesh(
-        new THREE.BoxGeometry(50, 50, 50),
+      head = new THREE.Mesh(
+        new THREE.BoxGeometry(20, 20, 20),
         new THREE.MeshLambertMaterial({ 
-          // color: 0x0000ff 
-          // color: '#0000ff'
-          // color: 'rgb(122, 100, 48)'
-          // color: 'hsl(100, 30%, 20%)'
-          color: new THREE.Color(0x0000ff)
+          color: 0x0000ff
         }),
       );
-      // box.position.set(0, 0, 0);
-      box.position.x = 50;
-      box.position.y = 0;
-      box.position.z = 0;
-      // box.scale.set(2, 1, 0.5);
-      box.scale.x = 2;
-      // box.rotation.x = 45 * Math.PI / 180;
-      box.rotation.set(70 * Math.PI / 180, 0, 0);
-      scene.add(box);
+      head.position.set(0, 40, 0);
+      // box.rotation.set(70 * Math.PI / 180, 0, 0);
+      // scene.add(head);
+
+      body = new THREE.Mesh(
+        new THREE.BoxGeometry(40, 60, 40),
+        new THREE.MeshLambertMaterial({ 
+          color: 0x0000ff
+        }),
+      );
+      body.position.set(0, 0, 0);
+      // scene.add(body);
+      person = new THREE.Group();
+      person.add(head);
+      person.add(body);
+      scene.add(person);
 
       // light
       light = new THREE.DirectionalLight(0xffffff, 1);
@@ -86,11 +91,13 @@
       function render() {
         requestAnimationFrame(render);
 
-        theta += 0.1;
-        camera.position.x = Math.cos(THREE.Math.degToRad(theta)) * 300;
-        camera.position.z = Math.sin(THREE.Math.degToRad(theta)) * 300;
-        camera.lookAt(scene.position);
+        // theta += 0.1;
+        // camera.position.x = Math.cos(THREE.Math.degToRad(theta)) * 300;
+        // camera.position.z = Math.sin(THREE.Math.degToRad(theta)) * 300;
+        // camera.lookAt(scene.position);
         // box.rotation.y += 0.01;
+
+        person.rotation.y += 0.01;
         renderer.render(scene, camera);        
       }
       render();
